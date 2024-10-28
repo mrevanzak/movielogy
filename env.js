@@ -16,13 +16,9 @@
 const z = require('zod');
 
 const packageJSON = require('./package.json');
-const path = require('path');
 const APP_ENV = process.env.APP_ENV ?? 'development';
-const envPath = path.resolve(__dirname, `.env.${APP_ENV}`);
 
-require('dotenv').config({
-  path: envPath,
-});
+require('dotenv')
 
 /**
  * 2nd part: Define some static variables for the app
@@ -34,8 +30,8 @@ require('dotenv').config({
 
 // TODO: Replace these values with your own
 
-const BUNDLE_ID = 'com.movielogy'; // ios bundle id
-const PACKAGE = 'com.movielogy'; // android package name
+const BUNDLE_ID = 'com.mrevanzak.movielogy'; // ios bundle id
+const PACKAGE = 'com.mrevanzak.movielogy'; // android package name
 const NAME = 'movielogy'; // app name
 const EXPO_ACCOUNT_OWNER = 'expo-owner'; // expo account owner
 const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
@@ -80,15 +76,12 @@ const client = z.object({
 
   // ADD YOUR CLIENT ENV VARS HERE
   API_URL: z.string(),
-  VAR_NUMBER: z.number(),
-  VAR_BOOL: z.boolean(),
+  TMDB_API_KEY: z.string(),
 });
 
 const buildTime = z.object({
   EXPO_ACCOUNT_OWNER: z.string(),
   EAS_PROJECT_ID: z.string(),
-  // ADD YOUR BUILD TIME ENV VARS HERE
-  SECRET_KEY: z.string(),
 });
 
 /**
@@ -104,8 +97,7 @@ const _clientEnv = {
 
   // ADD YOUR ENV VARS HERE TOO
   API_URL: process.env.API_URL,
-  VAR_NUMBER: Number(process.env.VAR_NUMBER),
-  VAR_BOOL: process.env.VAR_BOOL === 'true',
+  TMDB_API_KEY: process.env.TMDB_API_KEY,
 };
 
 /**
@@ -114,8 +106,6 @@ const _clientEnv = {
 const _buildTimeEnv = {
   EXPO_ACCOUNT_OWNER,
   EAS_PROJECT_ID,
-  // ADD YOUR ENV VARS HERE TOO
-  SECRET_KEY: process.env.SECRET_KEY,
 };
 
 /**
