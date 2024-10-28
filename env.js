@@ -18,7 +18,7 @@ const z = require('zod');
 const packageJSON = require('./package.json');
 const APP_ENV = process.env.APP_ENV ?? 'development';
 
-require('dotenv')
+require('dotenv').config()
 
 /**
  * 2nd part: Define some static variables for the app
