@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import * as React from 'react';
 import type {
   Control,
@@ -14,6 +15,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { tv } from 'tailwind-variants';
+import { match } from 'ts-pattern';
 
 import { cn } from '@/core';
 
@@ -96,6 +98,8 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   const onBlur = React.useCallback(() => setIsFocussed(false), []);
   const onFocus = React.useCallback(() => setIsFocussed(true), []);
 
+  console.log('inputProps', inputProps.secureTextEntry);
+
   const styles = React.useMemo(
     () =>
       inputTv({
@@ -167,7 +171,9 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
             inputProps.style,
           ])}
         />
-        {trailingContent}
+        {trailingContent ? (
+          <Text className={styles.label()}>{trailingContent}</Text>
+        ) : null}
       </View>
       {error && (
         <Text
@@ -185,15 +191,38 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
 export function ControlledInput<T extends FieldValues>(
   props: ControlledInputProps<T>,
 ) {
-  const { name, control, rules, ...inputProps } = props;
+  const { name, control, rules, secureTextEntry, ...inputProps } = props;
 
   const { field, fieldState } = useController({ control, name, rules });
+
+  const [passwordVisible, setPasswordVisible] =
+    React.useState(!secureTextEntry);
+
   return (
     <Input
       ref={field.ref}
       autoCapitalize="none"
       onChangeText={field.onChange}
       value={(field.value as string) || ''}
+      secureTextEntry={passwordVisible}
+      trailingContent={match([props.secureTextEntry, passwordVisible])
+        .with([true, false], () => (
+          <Ionicons
+            name="eye-off"
+            size={24}
+            color="white"
+            onPress={() => setPasswordVisible(true)}
+          />
+        ))
+        .with([true, true], () => (
+          <Ionicons
+            name="eye"
+            size={24}
+            color="white"
+            onPress={() => setPasswordVisible(false)}
+          />
+        ))
+        .otherwise(() => null)}
       {...inputProps}
       error={fieldState.error?.message}
     />
