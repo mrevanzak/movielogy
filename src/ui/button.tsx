@@ -1,13 +1,12 @@
 import React from 'react';
-import type { PressableProps, View } from 'react-native';
-import { ActivityIndicator, Pressable, Text } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity } from 'react-native';
+import { type TouchableOpacityProps } from 'react-native-gesture-handler';
 import type { VariantProps } from 'tailwind-variants';
 import { tv } from 'tailwind-variants';
 
 const button = tv({
   slots: {
-    container:
-      'my-2 flex flex-row items-center justify-center rounded-md active:opacity-90',
+    container: 'my-2 flex flex-row items-center justify-center rounded-md',
     label: 'font-inter text-base font-semibold',
     indicator: 'h-6 text-white',
   },
@@ -86,14 +85,16 @@ const button = tv({
 });
 
 type ButtonVariants = VariantProps<typeof button>;
-interface Props extends ButtonVariants, Omit<PressableProps, 'disabled'> {
+interface Props
+  extends ButtonVariants,
+    Omit<TouchableOpacityProps, 'disabled'> {
   label?: string;
   loading?: boolean;
   className?: string;
   textClassName?: string;
 }
 
-export const Button = React.forwardRef<View, Props>(
+export const Button = React.forwardRef<TouchableOpacity, Props>(
   (
     {
       label: text,
@@ -114,7 +115,7 @@ export const Button = React.forwardRef<View, Props>(
     );
 
     return (
-      <Pressable
+      <TouchableOpacity
         disabled={disabled || loading}
         className={styles.container({ className })}
         {...props}
@@ -141,7 +142,7 @@ export const Button = React.forwardRef<View, Props>(
             )}
           </>
         )}
-      </Pressable>
+      </TouchableOpacity>
     );
   },
 );
