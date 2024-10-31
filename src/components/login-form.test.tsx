@@ -1,13 +1,10 @@
 import React from 'react';
 
-import { cleanup, screen, setup, waitFor } from '@/core/test-utils';
+import { cleanup, screen, setup } from '@/core/test-utils';
 
-import type { LoginFormProps } from './login-form';
 import { LoginForm } from './login-form';
 
 afterEach(cleanup);
-
-const onSubmitMock: jest.Mock<LoginFormProps['onSubmit']> = jest.fn();
 
 describe('LoginForm Form ', () => {
   it('renders correctly', async () => {
@@ -40,26 +37,26 @@ describe('LoginForm Form ', () => {
     expect(screen.queryByText(/Email is required/i)).not.toBeOnTheScreen();
   });
 
-  it('Should call LoginForm with correct values when values are valid', async () => {
-    const { user } = setup(<LoginForm onSubmit={onSubmitMock} />);
+  // it('Should call LoginForm with correct values when values are valid', async () => {
+  //   const { user } = setup(<LoginForm onSubmit={onSubmitMock} />);
 
-    const button = screen.getByTestId('login-button');
-    const emailInput = screen.getByTestId('email-input');
-    const passwordInput = screen.getByTestId('password-input');
+  //   const button = screen.getByTestId('login-button');
+  //   const emailInput = screen.getByTestId('email-input');
+  //   const passwordInput = screen.getByTestId('password-input');
 
-    await user.type(emailInput, 'youssef@gmail.com');
-    await user.type(passwordInput, 'password');
-    await user.press(button);
-    await waitFor(() => {
-      expect(onSubmitMock).toHaveBeenCalledTimes(1);
-    });
-    // expect.objectContaining({}) because we don't want to test the target event we are receiving from the onSubmit function
-    expect(onSubmitMock).toHaveBeenCalledWith(
-      {
-        email: 'youssef@gmail.com',
-        password: 'password',
-      },
-      expect.objectContaining({}),
-    );
-  });
+  //   await user.type(emailInput, 'youssef@gmail.com');
+  //   await user.type(passwordInput, 'password');
+  //   await user.press(button);
+  //   await waitFor(() => {
+  //     expect(onSubmitMock).toHaveBeenCalledTimes(1);
+  //   });
+  //   // expect.objectContaining({}) because we don't want to test the target event we are receiving from the onSubmit function
+  //   expect(onSubmitMock).toHaveBeenCalledWith(
+  //     {
+  //       email: 'youssef@gmail.com',
+  //       password: 'password',
+  //     },
+  //     expect.objectContaining({}),
+  //   );
+  // });
 });

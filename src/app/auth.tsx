@@ -17,7 +17,9 @@ export default function Auth() {
         <Link href="/login" asChild>
           <Button size="lg" label="Login" />
         </Link>
-        <Button size="lg" label="Sign Up" variant="ghost" />
+        <Link href="/sign-up" asChild>
+          <Button size="lg" label="Sign Up" variant="ghost" />
+        </Link>
       </ThemedView>
     </View>
   );

@@ -1,3 +1,4 @@
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'expo-router';
@@ -15,6 +16,11 @@ const schema = z.object({
       required_error: 'Email is required',
     })
     .email('Invalid email format'),
+  username: z
+    .string({
+      required_error: 'Username is required',
+    })
+    .min(3, 'Username must be at least 3 characters'),
   password: z
     .string({
       required_error: 'Password is required',
@@ -24,7 +30,7 @@ const schema = z.object({
 
 export type FormType = z.infer<typeof schema>;
 
-export const LoginForm = () => {
+export const SignupForm = () => {
   const router = useRouter();
   const signIn = useAuth.use.signIn();
 
@@ -50,6 +56,13 @@ export const LoginForm = () => {
         }
       />
       <ControlledInput
+        testID="username-input"
+        control={control}
+        name="username"
+        label="Username"
+        leadingContent={<FontAwesome5 name="user-alt" size={24} />}
+      />
+      <ControlledInput
         testID="password-input"
         control={control}
         name="password"
@@ -61,7 +74,7 @@ export const LoginForm = () => {
       />
       <Button
         testID="login-button"
-        label="Login"
+        label="Create Account"
         size="lg"
         onPress={onSubmit}
       />
