@@ -6,51 +6,61 @@ import type {
   RegisterOptions,
 } from 'react-hook-form';
 import { useController } from 'react-hook-form';
-import type { TextInputProps } from 'react-native';
+import type { LayoutChangeEvent, TextInputProps } from 'react-native';
 import { I18nManager, StyleSheet, View } from 'react-native';
 import { TextInput as NTextInput } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { tv } from 'tailwind-variants';
 
-import colors from './colors';
+import { cn } from '@/core';
+
 import { Text } from './text';
+import { ThemedView } from './themed-view';
 
 const inputTv = tv({
   slots: {
-    container: 'mb-2',
-    label: 'text-grey-100 mb-1 text-lg dark:text-neutral-100',
-    input:
-      'mt-0 rounded-xl border-[0.5px] border-neutral-300 bg-neutral-100 px-4 py-3 font-inter text-base  font-medium leading-5 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white',
+    container: 'my-3 gap-1',
+    label: 'text-grey-100 text-lg dark:text-neutral-100',
+    inputContainer:
+      'flex-row gap-2 border border-black px-2 py-4 dark:border-white',
+    input: 'flex-1 font-inter text-base font-medium leading-5 dark:text-white',
   },
-
   variants: {
-    focused: {
-      true: {
-        input: 'border-neutral-400 dark:border-neutral-300',
-      },
-    },
     error: {
       true: {
-        input: 'border-danger-600',
+        inputContainer: 'border-danger-600 dark:border-danger-600',
         label: 'text-danger-600 dark:text-danger-600',
+      },
+    },
+    focused: {
+      true: {
+        inputContainer: 'border-primary dark:border-primary',
+        label: 'text-primary dark:text-primary',
       },
     },
     disabled: {
       true: {
-        input: 'bg-neutral-200',
+        inputContainer: 'bg-neutral-200 dark:bg-neutral-800',
       },
     },
   },
   defaultVariants: {
-    focused: false,
     error: false,
+    focused: false,
     disabled: false,
   },
 });
 
-export interface NInputProps extends TextInputProps {
+export interface NInputProps
+  extends Omit<TextInputProps, 'placeholder' | 'placeholderTextColor'> {
   label?: string;
   disabled?: boolean;
   error?: string;
+  leadingContent?: React.ReactNode;
+  trailingContent?: React.ReactNode;
 }
 
 type TRule<T extends FieldValues> =
@@ -72,7 +82,16 @@ interface ControlledInputProps<T extends FieldValues>
     InputControllerType<T> {}
 
 export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
-  const { label, error, testID, ...inputProps } = props;
+  const {
+    label,
+    error,
+    testID,
+    leadingContent,
+    trailingContent,
+    value,
+    ...inputProps
+  } = props;
+  const [containerHeight, setContainerHeight] = React.useState(0);
   const [isFocussed, setIsFocussed] = React.useState(false);
   const onBlur = React.useCallback(() => setIsFocussed(false), []);
   const onFocus = React.useCallback(() => setIsFocussed(true), []);
@@ -87,30 +106,69 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
     [error, isFocussed, props.disabled],
   );
 
+  const isLeadingContentPresent = !!leadingContent;
+  const rLabelContainerStyles = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateY: withTiming(isFocussed || value ? -containerHeight / 2 : 0),
+      },
+      {
+        translateX: withTiming(
+          isLeadingContentPresent && (isFocussed || value) ? -24 : 0,
+        ),
+      },
+    ],
+  }));
+
+  const rLabelStyles = useAnimatedStyle(() => ({
+    fontSize: withTiming(isFocussed || value ? 12 : 16),
+  }));
+
+  const onLayout = React.useCallback((e: LayoutChangeEvent) => {
+    setContainerHeight(e.nativeEvent.layout.height);
+  }, []);
+
   return (
-    <View className={styles.container()}>
-      {label && (
-        <Text
-          testID={testID ? `${testID}-label` : undefined}
-          className={styles.label()}
-        >
-          {label}
-        </Text>
-      )}
-      <NTextInput
-        testID={testID}
-        ref={ref}
-        placeholderTextColor={colors.neutral[400]}
-        className={styles.input()}
-        onBlur={onBlur}
-        onFocus={onFocus}
-        {...inputProps}
-        style={StyleSheet.flatten([
-          { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
-          { textAlign: I18nManager.isRTL ? 'right' : 'left' },
-          inputProps.style,
-        ])}
-      />
+    <View className={styles.container()} onLayout={onLayout}>
+      <View className={styles.inputContainer()}>
+        {label && (
+          <ThemedView
+            className={cn(
+              'pointer-events-none absolute left-4 top-1/2 z-10 mt-0.5 px-1',
+              {
+                'left-10': isLeadingContentPresent,
+              },
+            )}
+            style={rLabelContainerStyles}
+          >
+            <Animated.Text
+              testID={testID ? `${testID}-label` : undefined}
+              className={styles.label()}
+              style={rLabelStyles}
+            >
+              {label}
+            </Animated.Text>
+          </ThemedView>
+        )}
+        {leadingContent ? (
+          <Text className={styles.label()}>{leadingContent}</Text>
+        ) : null}
+        <NTextInput
+          testID={testID}
+          ref={ref}
+          onBlur={onBlur}
+          onFocus={onFocus}
+          className={styles.input()}
+          value={value}
+          {...inputProps}
+          style={StyleSheet.flatten([
+            { writingDirection: I18nManager.isRTL ? 'rtl' : 'ltr' },
+            { textAlign: I18nManager.isRTL ? 'right' : 'left' },
+            inputProps.style,
+          ])}
+        />
+        {trailingContent}
+      </View>
       {error && (
         <Text
           testID={testID ? `${testID}-error` : undefined}

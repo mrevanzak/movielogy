@@ -29,14 +29,6 @@ describe('Input component ', () => {
     });
   });
 
-  it('should render the placeholder correctly ', () => {
-    render(<Input testID="input" placeholder="Enter your username" />);
-    expect(screen.getByTestId('input')).toBeOnTheScreen();
-    expect(
-      screen.getByPlaceholderText('Enter your username'),
-    ).toBeOnTheScreen();
-  });
-
   it('should render the label correctly ', () => {
     render(<Input testID="input" label="Username" />);
     expect(screen.getByTestId('input')).toBeOnTheScreen();
@@ -57,7 +49,6 @@ describe('Input component ', () => {
       <Input
         testID="input"
         label="Username"
-        placeholder="Enter your username"
         error="This is an error message"
       />,
     );
@@ -68,9 +59,6 @@ describe('Input component ', () => {
     expect(screen.getByTestId('input-error')).toHaveTextContent(
       'This is an error message',
     );
-    expect(
-      screen.getByPlaceholderText('Enter your username'),
-    ).toBeOnTheScreen();
   });
 
   it('should trigger onFocus event correctly ', async () => {

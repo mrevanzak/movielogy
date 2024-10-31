@@ -18,7 +18,7 @@ export const Inputs = () => {
     <>
       <Title text="Form" />
       <View>
-        <Input label="Default" placeholder="Lorem ipsum dolor sit amet" />
+        <Input label="Default" />
         <Input label="Error" error="This is a message error" />
         <Input label="Focused" />
         <Select

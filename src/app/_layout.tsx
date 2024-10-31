@@ -17,10 +17,6 @@ import { FocusAwareStatusBar } from '@/ui';
 
 export { ErrorBoundary } from 'expo-router';
 
-export const unstable_settings = {
-  initialRouteName: '(app)',
-};
-
 hydrateAuth();
 loadSelectedTheme();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -30,7 +26,7 @@ export default function RootLayout() {
   return (
     <Providers>
       <FocusAwareStatusBar />
-      <Stack>
+      <Stack initialRouteName="(app)">
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
         <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />

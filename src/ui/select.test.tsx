@@ -68,7 +68,6 @@ describe('Select component ', () => {
         label="Select"
         options={options}
         testID="select"
-        placeholder="Select an option"
       />,
     );
 

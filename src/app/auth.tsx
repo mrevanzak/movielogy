@@ -1,4 +1,5 @@
 import { Image } from 'expo-image';
+import { Link } from 'expo-router';
 import React from 'react';
 
 import { Button, View } from '@/ui';
@@ -13,7 +14,9 @@ export default function Auth() {
         contentFit="cover"
       />
       <ThemedView className="pb-safe absolute inset-x-0 bottom-0 z-10 rounded-t-xl px-4 py-7 opacity-90">
-        <Button size="lg" label="Login" />
+        <Link href="/login" asChild>
+          <Button size="lg" label="Login" />
+        </Link>
         <Button size="lg" label="Sign Up" variant="ghost" />
       </ThemedView>
     </View>
