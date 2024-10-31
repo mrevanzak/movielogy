@@ -13,6 +13,7 @@ import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { APIProvider } from '@/api';
 import { hydrateAuth, loadSelectedTheme } from '@/core';
 import { useThemeConfig } from '@/core/use-theme-config';
+import { FocusAwareStatusBar } from '@/ui';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -28,9 +29,10 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   return (
     <Providers>
+      <FocusAwareStatusBar />
       <Stack>
         <Stack.Screen name="(app)" options={{ headerShown: false }} />
-        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+        <Stack.Screen name="auth" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
       </Stack>
     </Providers>

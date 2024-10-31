@@ -6,7 +6,7 @@ import { tv } from 'tailwind-variants';
 
 const button = tv({
   slots: {
-    container: 'my-2 flex flex-row items-center justify-center rounded-md px-4',
+    container: 'my-2 flex flex-row items-center justify-center rounded-md',
     label: 'font-inter text-base font-semibold',
     indicator: 'h-6 text-white',
   },
@@ -14,7 +14,7 @@ const button = tv({
   variants: {
     variant: {
       default: {
-        container: 'bg-black dark:bg-white',
+        container: 'bg-primary',
         label: 'text-white dark:text-black',
         indicator: 'text-white dark:text-black',
       },
@@ -34,8 +34,8 @@ const button = tv({
         indicator: 'text-white',
       },
       ghost: {
-        container: 'bg-transparent',
-        label: 'text-black underline dark:text-white',
+        container: 'border border-primary bg-transparent',
+        label: 'text-primary',
         indicator: 'text-black dark:text-white',
       },
       link: {
@@ -50,15 +50,15 @@ const button = tv({
         label: 'text-base',
       },
       lg: {
-        container: 'h-12 px-8',
-        label: 'text-xl',
+        container: 'px-6 py-4',
+        label: 'text-base',
       },
       sm: {
         container: 'h-8 px-3',
         label: 'text-sm',
         indicator: 'h-2',
       },
-      icon: { container: 'h-9 w-9' },
+      icon: { container: 'size-9' },
     },
     disabled: {
       true: {
@@ -105,11 +105,11 @@ export const Button = React.forwardRef<View, Props>(
       textClassName = '',
       ...props
     },
-    ref
+    ref,
   ) => {
     const styles = React.useMemo(
       () => button({ variant, disabled, size }),
-      [variant, disabled, size]
+      [variant, disabled, size],
     );
 
     return (
@@ -142,5 +142,5 @@ export const Button = React.forwardRef<View, Props>(
         )}
       </Pressable>
     );
-  }
+  },
 );
