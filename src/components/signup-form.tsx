@@ -5,6 +5,7 @@ import { cssInterop } from 'nativewind';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
+import { translate } from '@/core/i18n';
 import { type SignUpSchema, signUpSchema } from '@/core/schemas/auth';
 import { useAuth } from '@/core/stores/auth';
 import { Button, ControlledInput, View } from '@/ui';
@@ -24,7 +25,7 @@ export const SignupForm = () => {
         testID="email-input"
         control={control}
         name="email"
-        label="Email"
+        label={translate('auth.email')}
         leadingContent={
           <MaterialCommunityIcons name="email" className="text-2xl" />
         }
@@ -33,14 +34,14 @@ export const SignupForm = () => {
         testID="username-input"
         control={control}
         name="username"
-        label="Username"
+        label={translate('auth.username')}
         leadingContent={<FontAwesome5 name="user-alt" size={24} />}
       />
       <ControlledInput
         testID="password-input"
         control={control}
         name="password"
-        label="Password"
+        label={translate('auth.password')}
         secureTextEntry
         leadingContent={
           <MaterialCommunityIcons name="lock" className="text-2xl" />
@@ -48,7 +49,7 @@ export const SignupForm = () => {
       />
       <Button
         testID="login-button"
-        label="Create Account"
+        label={translate('auth.create_account')}
         size="lg"
         onPress={onSubmit}
       />

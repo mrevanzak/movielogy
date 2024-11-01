@@ -2,6 +2,7 @@ import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import React from 'react';
 
+import { translate } from '@/core/i18n';
 import { Button, View } from '@/ui';
 import { ThemedView } from '@/ui/themed-view';
 
@@ -15,10 +16,10 @@ export default function Auth() {
       />
       <ThemedView className="pb-safe absolute inset-x-0 bottom-0 z-10 rounded-t-xl px-4 py-7 opacity-90">
         <Link href="/(auth)/login" asChild>
-          <Button size="lg" label="Login" />
+          <Button size="lg" label={translate('auth.login')} />
         </Link>
         <Link href="/sign-up" asChild>
-          <Button size="lg" label="Sign Up" variant="ghost" />
+          <Button size="lg" label={translate('auth.signup')} variant="ghost" />
         </Link>
       </ThemedView>
     </View>

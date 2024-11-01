@@ -1,6 +1,13 @@
 {
-  "onboarding": {
-    "message": "مرحبا بكم في موقع تطبيق obytes"
+  "auth": {
+    "create_account": "Buat akun",
+    "email": "Email",
+    "login": "Masuk",
+    "no_account": "Belum membuat akun?",
+    "password": "Kata sandi",
+    "register": "Daftar",
+    "signup": "Daftar",
+    "username": "Username"
   },
   "settings": {
     "about": "حول التطبيق ",

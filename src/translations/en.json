@@ -1,6 +1,13 @@
 {
-  "onboarding": {
-    "message": "Welcome to obytes app site"
+  "auth": {
+    "create_account": "Create Account",
+    "email": "Email",
+    "login": "Login",
+    "no_account": "Haven't made an account?",
+    "password": "Password",
+    "register": "Register",
+    "signup": "Sign Up",
+    "username": "Username"
   },
   "settings": {
     "about": "About",
