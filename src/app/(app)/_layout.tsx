@@ -1,16 +1,15 @@
 /* eslint-disable react/no-unstable-nested-components */
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { Redirect, SplashScreen, Tabs } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 import React, { useCallback, useEffect } from 'react';
 
 import { useAuth } from '@/core/stores/auth';
-import { Pressable, Text } from '@/ui';
-import {
-  Feed as FeedIcon,
-  Settings as SettingsIcon,
-  Style as StyleIcon,
-} from '@/ui/icons';
+import { colors } from '@/ui';
+import { Home, Settings as SettingsIcon } from '@/ui/icons';
 
 export default function TabLayout() {
+  const { colorScheme } = useColorScheme();
   const status = useAuth.use.status();
   const hideSplash = useCallback(async () => {
     await SplashScreen.hideAsync();
@@ -28,31 +27,52 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colorScheme === 'dark' ? colors.black : colors.white,
+        },
+        headerTitleStyle: {
+          fontSize: 18,
+          fontWeight: 700,
+        },
+        headerShadowVisible: false,
+        tabBarActiveTintColor: colors.primary,
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: colorScheme === 'dark' ? colors.black : colors.white,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Feed',
-          tabBarIcon: ({ color }) => <FeedIcon color={color} />,
-          headerRight: () => <CreateNewPostLink />,
+          title: 'Home',
+          tabBarIcon: (props) => <Home {...props} />,
+          headerShown: false,
           tabBarTestID: 'feed-tab',
         }}
       />
-
       <Tabs.Screen
-        name="style"
+        name="search"
         options={{
-          title: 'Style',
-          headerShown: false,
-          tabBarIcon: ({ color }) => <StyleIcon color={color} />,
+          title: 'Search',
+          tabBarIcon: (props) => <MaterialIcons name="search" {...props} />,
           tabBarTestID: 'style-tab',
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: 'Favorites',
+          tabBarIcon: (props) => <MaterialIcons name="favorite" {...props} />,
+          tabBarTestID: 'settings-tab',
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          headerShown: false,
           tabBarIcon: ({ color }) => <SettingsIcon color={color} />,
           tabBarTestID: 'settings-tab',
         }}
@@ -60,13 +80,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const CreateNewPostLink = () => {
-  const signOut = useAuth.use.signOut();
-
-  return (
-    <Pressable onPress={() => signOut()}>
-      <Text className="text-primary-300 px-3">Create</Text>
-    </Pressable>
-  );
-};
