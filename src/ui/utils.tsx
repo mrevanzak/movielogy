@@ -1,7 +1,7 @@
+import { toast } from '@baronha/ting';
 import type { AxiosError } from 'axios';
 import { type ClassValue, clsx } from 'clsx';
 import { Dimensions, Platform } from 'react-native';
-import { showMessage } from 'react-native-flash-message';
 import { twMerge } from 'tailwind-merge';
 
 export const IS_IOS = Platform.OS === 'ios';
@@ -15,20 +15,20 @@ export const showError = (error: AxiosError) => {
   console.log(JSON.stringify(error?.response?.data));
   const description = extractError(error?.response?.data).trimEnd();
 
-  showMessage({
-    message: 'Error',
-    description,
-    type: 'danger',
-    duration: 4000,
-    icon: 'danger',
+  toast({
+    title: 'Error',
+    message: description,
+    preset: 'error',
+    haptic: 'error',
   });
 };
 
 export const showErrorMessage = (message: string = 'Something went wrong ') => {
-  showMessage({
+  toast({
+    title: 'Error',
     message,
-    type: 'danger',
-    duration: 4000,
+    preset: 'error',
+    haptic: 'error',
   });
 };
 

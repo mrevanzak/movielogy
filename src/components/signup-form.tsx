@@ -1,45 +1,22 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
 import { cssInterop } from 'nativewind';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
+import { type SignUpSchema, signUpSchema } from '@/core/schemas/auth';
+import { useAuth } from '@/core/stores/auth';
 import { Button, ControlledInput, View } from '@/ui';
 
-const schema = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email('Invalid email format'),
-  username: z
-    .string({
-      required_error: 'Username is required',
-    })
-    .min(3, 'Username must be at least 3 characters'),
-  password: z
-    .string({
-      required_error: 'Password is required',
-    })
-    .min(6, 'Password must be at least 6 characters'),
-});
-
-export type SignUpSchema = z.infer<typeof schema>;
-
 export const SignupForm = () => {
-  const router = useRouter();
+  const signUp = useAuth.use.signUp();
 
   const { handleSubmit, control } = useForm<SignUpSchema>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(signUpSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push('/');
-  });
+  const onSubmit = handleSubmit((data) => signUp(data));
 
   return (
     <View className="gap-2">

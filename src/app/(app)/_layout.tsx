@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
+import { Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
 import { useAuth } from '@/core/stores/auth';
@@ -62,11 +62,11 @@ export default function TabLayout() {
 }
 
 const CreateNewPostLink = () => {
+  const signOut = useAuth.use.signOut();
+
   return (
-    <Link href="/feed/add-post" asChild>
-      <Pressable>
-        <Text className="text-primary-300 px-3">Create</Text>
-      </Pressable>
-    </Link>
+    <Pressable onPress={() => signOut()}>
+      <Text className="text-primary-300 px-3">Create</Text>
+    </Pressable>
   );
 };

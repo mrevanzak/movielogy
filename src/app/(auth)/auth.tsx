@@ -14,7 +14,7 @@ export default function Auth() {
         contentFit="cover"
       />
       <ThemedView className="pb-safe absolute inset-x-0 bottom-0 z-10 rounded-t-xl px-4 py-7 opacity-90">
-        <Link href="/login" asChild>
+        <Link href="/(auth)/login" asChild>
           <Button size="lg" label="Login" />
         </Link>
         <Link href="/sign-up" asChild>

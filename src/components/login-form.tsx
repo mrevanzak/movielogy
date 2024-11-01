@@ -1,39 +1,21 @@
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'expo-router';
 import { cssInterop } from 'nativewind';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 
+import { type LoginSchema, loginSchema } from '@/core/schemas/auth';
+import { useAuth } from '@/core/stores/auth';
 import { Button, ControlledInput, View } from '@/ui';
 
-const schema = z.object({
-  email: z
-    .string({
-      required_error: 'Email is required',
-    })
-    .email('Invalid email format'),
-  password: z
-    .string({
-      required_error: 'Password is required',
-    })
-    .min(6, 'Password must be at least 6 characters'),
-});
-
-export type FormType = z.infer<typeof schema>;
-
 export const LoginForm = () => {
-  const router = useRouter();
+  const login = useAuth.use.login();
 
-  const { handleSubmit, control } = useForm<FormType>({
-    resolver: zodResolver(schema),
+  const { handleSubmit, control } = useForm<LoginSchema>({
+    resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    router.push('/');
-  });
+  const onSubmit = handleSubmit((data) => login(data));
 
   return (
     <View className="gap-2">

@@ -1,12 +1,12 @@
 // Import  global CSS file
 import '../../global.css';
 
+import { setup } from '@baronha/ting';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { SplashScreen, Stack } from 'expo-router';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import FlashMessage from 'react-native-flash-message';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
@@ -14,8 +14,13 @@ import { APIProvider } from '@/api';
 import { loadSelectedTheme } from '@/core/hooks/use-selected-theme';
 import { useThemeConfig } from '@/core/hooks/use-theme-config';
 import { FocusAwareStatusBar } from '@/ui';
-
 export { ErrorBoundary } from 'expo-router';
+
+setup({
+  toast: {
+    haptic: 'success',
+  },
+});
 
 loadSelectedTheme();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -25,11 +30,8 @@ export default function RootLayout() {
   return (
     <Providers>
       <FocusAwareStatusBar />
-      <Stack initialRouteName="(app)">
-        <Stack.Screen name="(app)" options={{ headerShown: false }} />
-        <Stack.Screen name="auth" options={{ headerShown: false }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+      <Stack initialRouteName="(app)" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       </Stack>
     </Providers>
   );
@@ -45,10 +47,7 @@ function Providers({ children }: { children: React.ReactNode }) {
       <KeyboardProvider>
         <ThemeProvider value={theme}>
           <APIProvider>
-            <BottomSheetModalProvider>
-              {children}
-              <FlashMessage position="top" />
-            </BottomSheetModalProvider>
+            <BottomSheetModalProvider>{children}</BottomSheetModalProvider>
           </APIProvider>
         </ThemeProvider>
       </KeyboardProvider>
