@@ -203,7 +203,7 @@ export function ControlledInput<T extends FieldValues>(
       autoCapitalize="none"
       onChangeText={field.onChange}
       value={(field.value as string) || ''}
-      secureTextEntry={passwordVisible}
+      secureTextEntry={!passwordVisible}
       trailingContent={match([props.secureTextEntry, passwordVisible])
         .with([true, false], () => (
           <Ionicons
