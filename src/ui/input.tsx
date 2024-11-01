@@ -97,8 +97,6 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   const onBlur = React.useCallback(() => setIsFocussed(false), []);
   const onFocus = React.useCallback(() => setIsFocussed(true), []);
 
-  console.log('inputProps', inputProps.secureTextEntry);
-
   const styles = React.useMemo(
     () =>
       inputTv({
@@ -132,8 +130,8 @@ export const Input = React.forwardRef<NTextInput, NInputProps>((props, ref) => {
   }, []);
 
   return (
-    <View className={styles.container()} onLayout={onLayout}>
-      <View className={styles.inputContainer()}>
+    <View className={styles.container()}>
+      <View className={styles.inputContainer()} onLayout={onLayout}>
         {label && (
           <ThemedView
             className={cn(
