@@ -10,31 +10,30 @@
     "username": "Username"
   },
   "settings": {
-    "about": "حول التطبيق ",
-    "app_name": "اسم التطبيق",
-    "arabic": "عربي",
-    "english": "إنجليزي",
-    "generale": "عام",
-    "github": "جيثب",
-    "language": "لغة",
-    "links": "الروابط",
-    "logout": "تسجيل خروج",
-    "more": "أكثر",
-    "privacy": "سياسة الخصوصية",
-    "rate": "تقييم",
-    "share": "شارك",
-    "support": "الدعم",
-    "support_us": "ادعمنا",
-    "terms": "شروط الخدمة",
+    "about": "Tentang",
+    "app_name": "Nama Aplikasi",
+    "english": "Bahasa Inggris",
+    "generale": "Umum",
+    "github": "Github",
+    "indonesia": "Bahasa Indonesia",
+    "language": "Bahasa",
+    "links": "Tautan",
+    "logout": "Keluar",
+    "more": "Lebih",
+    "privacy": "Privasi",
+    "rate": "Beri rating",
+    "share": "Bagikan",
+    "support": "Dukungan",
+    "support_us": "Dukung kami",
+    "terms": "Ketentuan",
     "theme": {
-      "dark": "مظلم",
-      "light": "خفيفة",
-      "system": "System",
-      "title": "سمة"
+      "dark": "Gelap",
+      "light": "Terang",
+      "system": "Sistem",
+      "title": "Tema"
     },
-    "title": "إعدادات",
-    "version": "إصدار",
-    "website": "موقع الكتروني"
-  },
-  "welcome": "test arabic"
+    "title": "Pengaturan",
+    "version": "Versi",
+    "website": "Website"
+  }
 }

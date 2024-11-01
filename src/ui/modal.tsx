@@ -33,11 +33,13 @@ import type {
   BottomSheetModalProps,
 } from '@gorhom/bottom-sheet';
 import { BottomSheetModal, useBottomSheet } from '@gorhom/bottom-sheet';
+import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { Path, Svg } from 'react-native-svg';
 
+import colors from './colors';
 import { Text } from './text';
 
 type ModalProps = BottomSheetModalProps & {
@@ -63,21 +65,15 @@ export const useModal = () => {
 };
 
 export const Modal = React.forwardRef(
-  (
-    {
-      snapPoints: _snapPoints = ['60%'],
-      title,
-      detached = false,
-      ...props
-    }: ModalProps,
-    ref: ModalRef,
-  ) => {
+  ({ title, detached = false, ...props }: ModalProps, ref: ModalRef) => {
+    const { colorScheme } = useColorScheme();
+    const isDark = colorScheme === 'dark';
+
     const detachedProps = React.useMemo(
       () => getDetachedProps(detached),
       [detached],
     );
     const modal = useModal();
-    const snapPoints = React.useMemo(() => _snapPoints, [_snapPoints]);
 
     React.useImperativeHandle(
       ref,
@@ -99,10 +95,11 @@ export const Modal = React.forwardRef(
         {...props}
         {...detachedProps}
         ref={modal.ref}
-        index={0}
-        snapPoints={snapPoints}
         backdropComponent={props.backdropComponent || renderBackdrop}
         handleComponent={renderHandleComponent}
+        backgroundStyle={{
+          backgroundColor: isDark ? colors.black : colors.white,
+        }}
       />
     );
   },
@@ -159,7 +156,7 @@ const ModalHeader = React.memo(({ title, dismiss }: ModalHeaderProps) => {
     <>
       {title && (
         <View className="flex-row px-2 py-4">
-          <View className="h-[24px] w-[24px]" />
+          <View className="size-[24px]" />
           <View className="flex-1">
             <Text className="text-center text-[16px] font-bold text-[#26313D] dark:text-white">
               {title}
@@ -176,7 +173,7 @@ const CloseButton = ({ close }: { close: () => void }) => {
   return (
     <Pressable
       onPress={close}
-      className="absolute right-3 top-3 h-[24px] w-[24px] items-center justify-center "
+      className="absolute right-3 top-3 size-[24px] items-center justify-center"
       hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
       accessibilityLabel="close modal"
       accessibilityRole="button"
