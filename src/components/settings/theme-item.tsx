@@ -1,7 +1,10 @@
 import React from 'react';
 
-import type { ColorSchemeType } from '@/core';
-import { translate, useSelectedTheme } from '@/core';
+import {
+  type ColorSchemeType,
+  useSelectedTheme,
+} from '@/core/hooks/use-selected-theme';
+import { translate } from '@/core/i18n';
 import type { OptionType } from '@/ui';
 import { Options, useModal } from '@/ui';
 
@@ -16,7 +19,7 @@ export const ThemeItem = () => {
       setSelectedTheme(option.value as ColorSchemeType);
       modal.dismiss();
     },
-    [setSelectedTheme, modal]
+    [setSelectedTheme, modal],
   );
 
   const themes = React.useMemo(
@@ -25,12 +28,12 @@ export const ThemeItem = () => {
       { label: `${translate('settings.theme.light')} 🌞`, value: 'light' },
       { label: `${translate('settings.theme.system')} ⚙️`, value: 'system' },
     ],
-    []
+    [],
   );
 
   const theme = React.useMemo(
     () => themes.find((t) => t.value === selectedTheme),
-    [selectedTheme, themes]
+    [selectedTheme, themes],
   );
 
   return (

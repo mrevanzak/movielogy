@@ -7,7 +7,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { useAuth } from '@/core';
 import { Button, ControlledInput, View } from '@/ui';
 
 const schema = z.object({
@@ -28,19 +27,17 @@ const schema = z.object({
     .min(6, 'Password must be at least 6 characters'),
 });
 
-export type FormType = z.infer<typeof schema>;
+export type SignUpSchema = z.infer<typeof schema>;
 
 export const SignupForm = () => {
   const router = useRouter();
-  const signIn = useAuth.use.signIn();
 
-  const { handleSubmit, control } = useForm<FormType>({
+  const { handleSubmit, control } = useForm<SignUpSchema>({
     resolver: zodResolver(schema),
   });
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    signIn({ access: 'access-token', refresh: 'refresh-token' });
     router.push('/');
   });
 

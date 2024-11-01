@@ -11,13 +11,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 
 import { APIProvider } from '@/api';
-import { hydrateAuth, loadSelectedTheme } from '@/core';
-import { useThemeConfig } from '@/core/use-theme-config';
+import { loadSelectedTheme } from '@/core/hooks/use-selected-theme';
+import { useThemeConfig } from '@/core/hooks/use-theme-config';
 import { FocusAwareStatusBar } from '@/ui';
 
 export { ErrorBoundary } from 'expo-router';
 
-hydrateAuth();
 loadSelectedTheme();
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

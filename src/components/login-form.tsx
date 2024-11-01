@@ -6,7 +6,6 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { useAuth } from '@/core';
 import { Button, ControlledInput, View } from '@/ui';
 
 const schema = z.object({
@@ -26,7 +25,6 @@ export type FormType = z.infer<typeof schema>;
 
 export const LoginForm = () => {
   const router = useRouter();
-  const signIn = useAuth.use.signIn();
 
   const { handleSubmit, control } = useForm<FormType>({
     resolver: zodResolver(schema),
@@ -34,7 +32,6 @@ export const LoginForm = () => {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
-    signIn({ access: 'access-token', refresh: 'refresh-token' });
     router.push('/');
   });
 

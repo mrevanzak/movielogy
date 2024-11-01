@@ -2,7 +2,7 @@
 import { Link, Redirect, SplashScreen, Tabs } from 'expo-router';
 import React, { useCallback, useEffect } from 'react';
 
-import { useAuth } from '@/core';
+import { useAuth } from '@/core/stores/auth';
 import { Pressable, Text } from '@/ui';
 import {
   Feed as FeedIcon,

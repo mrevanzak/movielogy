@@ -17,10 +17,9 @@ import Animated, {
 import { tv } from 'tailwind-variants';
 import { match } from 'ts-pattern';
 
-import { cn } from '@/core';
-
 import { Text } from './text';
 import { ThemedView } from './themed-view';
+import { cn } from './utils';
 
 const inputTv = tv({
   slots: {
