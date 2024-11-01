@@ -1,4 +1,9 @@
-import { toast } from '@baronha/ting';
+import {
+  alert,
+  type AlertOptions,
+  toast,
+  type ToastOptions,
+} from '@baronha/ting';
 import type { AxiosError } from 'axios';
 import { type ClassValue, clsx } from 'clsx';
 import { Dimensions, Platform } from 'react-native';
@@ -23,13 +28,20 @@ export const showError = (error: AxiosError) => {
   });
 };
 
-export const showErrorMessage = (message: string = 'Something went wrong ') => {
-  toast({
+export const showErrorMessage = (message: string = 'Something went wrong') => {
+  const options: AlertOptions | ToastOptions = {
     title: 'Error',
     message,
     preset: 'error',
     haptic: 'error',
-  });
+  };
+
+  if (message.length > 25) {
+    alert(options);
+    return;
+  }
+
+  toast(options);
 };
 
 export const extractError = (data: unknown): string => {

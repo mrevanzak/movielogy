@@ -85,6 +85,7 @@
     "tailwind-variants": "^0.2.1",
     "ts-pattern": "^5.5.0",
     "zod": "^3.23.8",
+    "zod-validation-error": "^3.4.0",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

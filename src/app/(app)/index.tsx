@@ -1,34 +1,35 @@
 import { FlashList } from '@shopify/flash-list';
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import type { Post } from '@/api';
-import { usePosts } from '@/api';
-import { Card } from '@/components/card';
-import { EmptyList, FocusAwareStatusBar, Text, View } from '@/ui';
+import { getTrending } from '@/api/trending';
+import { Env } from '@/core/env';
+import { Image, View } from '@/ui';
 
 export default function Feed() {
-  const { data, isPending, isError } = usePosts();
-  const renderItem = React.useCallback(
-    ({ item }: { item: Post }) => <Card {...item} />,
-    []
-  );
+  const { data } = useQuery(getTrending);
 
-  if (isError) {
-    return (
-      <View>
-        <Text> Error Loading data </Text>
-      </View>
-    );
-  }
   return (
-    <View className="flex-1 ">
-      <FocusAwareStatusBar />
+    <View className="flex-1 items-center justify-center">
       <FlashList
         data={data}
-        renderItem={renderItem}
-        keyExtractor={(_, index) => `item-${index}`}
-        ListEmptyComponent={<EmptyList isLoading={isPending} />}
-        estimatedItemSize={300}
+        horizontal
+        decelerationRate="fast"
+        scrollEventThrottle={1000 / 60}
+        renderItem={({ item }) => (
+          <Image
+            source={Env.IMAGE_URL + '/w342' + item.poster_path}
+            contentFit="cover"
+            className="aspect-[2/3] w-80 rounded-lg"
+            onError={(e) => {
+              console.error(e.error);
+            }}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+        className="grow-0"
+        estimatedItemSize={200}
+        ItemSeparatorComponent={() => <View className="w-4" />}
       />
     </View>
   );
