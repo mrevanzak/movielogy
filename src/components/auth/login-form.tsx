@@ -3,11 +3,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { cssInterop } from 'nativewind';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 import { translate } from '@/core/i18n';
 import { type LoginSchema, loginSchema } from '@/core/schemas/auth';
 import { useAuth } from '@/core/stores/auth';
-import { Button, ControlledInput, View } from '@/ui';
+import { Button, ControlledInput } from '@/ui';
 
 export const LoginForm = () => {
   const login = useAuth.use.login();
@@ -19,7 +20,11 @@ export const LoginForm = () => {
   const onSubmit = handleSubmit((data) => login(data));
 
   return (
-    <View className="gap-2">
+    <KeyboardAvoidingView
+      className="gap-2"
+      behavior="padding"
+      keyboardVerticalOffset={100}
+    >
       <ControlledInput
         testID="email-input"
         control={control}
@@ -45,7 +50,7 @@ export const LoginForm = () => {
         size="lg"
         onPress={onSubmit}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
