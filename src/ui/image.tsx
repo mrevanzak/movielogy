@@ -1,27 +1,38 @@
 import type { ImageProps } from 'expo-image';
 import { Image as NImage } from 'expo-image';
-import { cssInterop } from 'nativewind';
+import { Skeleton } from 'moti/skeleton';
+import { cssInterop, useColorScheme } from 'nativewind';
 import * as React from 'react';
+import Animated, { type AnimatedProps, FadeIn } from 'react-native-reanimated';
 
-export type ImgProps = ImageProps & {
-  className?: string;
-};
-
+const AnimatedImage = Animated.createAnimatedComponent(NImage);
 cssInterop(NImage, { className: 'style' });
 
 export const Image = ({
-  style,
-  className,
-  placeholder = 'L6PZfSi_.AyE_3t7t7R**0o#DgR4',
+  placeholder = { blurhash: 'L6PZfSi_.AyE_3t7t7R**0o#DgR4' },
   ...props
-}: ImgProps) => {
+}: AnimatedProps<ImageProps>) => {
+  const { colorScheme } = useColorScheme();
+  const [loaded, setLoaded] = React.useState(false);
+
   return (
-    <NImage
-      className={className}
-      placeholder={placeholder}
-      style={style}
-      {...props}
-    />
+    <Skeleton
+      show={!loaded}
+      colorMode={colorScheme}
+      width="100%"
+      height="100%"
+      transition={{
+        type: 'timing',
+        duration: 2000,
+      }}
+    >
+      <AnimatedImage
+        entering={FadeIn.duration(1000)}
+        onLoad={() => setLoaded(true)}
+        placeholder={placeholder}
+        {...props}
+      />
+    </Skeleton>
   );
 };
 

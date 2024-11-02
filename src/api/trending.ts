@@ -46,5 +46,6 @@ export const getTrending = queryOptions({
         ),
       );
   },
-  staleTime: Infinity,
 });
+
+export type Trending = z.infer<typeof schema>;
