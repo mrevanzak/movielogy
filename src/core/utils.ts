@@ -44,4 +44,5 @@ export function errorHandling(error: unknown) {
   }
 
   showErrorMessage();
+  console.error(error);
 }

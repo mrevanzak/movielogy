@@ -1,3 +1,3 @@
 export * from './common';
-export * from './posts';
+export * from './schema';
 export * from './types';

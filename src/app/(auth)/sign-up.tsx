@@ -1,7 +1,7 @@
 import { Link } from 'expo-router';
 import React from 'react';
 
-import { SignupForm } from '@/components/signup-form';
+import { SignupForm } from '@/components/auth/signup-form';
 import { Text } from '@/ui';
 import { ThemedView } from '@/ui/themed-view';
 
