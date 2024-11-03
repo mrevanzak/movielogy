@@ -33,7 +33,7 @@ export default function PeekScreen() {
           translateX: interpolate(
             Number(params.pageX),
             [0, SCREEN_WIDTH],
-            [SCREEN_WIDTH / 10, 80],
+            [SCREEN_WIDTH / 10, SCREEN_WIDTH / 6],
             Extrapolation.CLAMP,
           ),
         },
