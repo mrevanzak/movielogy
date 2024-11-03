@@ -37,3 +37,9 @@ export const movieOrTvSchema = z.discriminatedUnion('media_type', [
 export type MovieOrTv = z.infer<typeof movieOrTvSchema>;
 
 export type MediaType = MovieOrTv['media_type'];
+
+export const genreSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+});
+export type Genre = z.infer<typeof genreSchema>;

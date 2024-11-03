@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 import { Dimensions, Pressable } from 'react-native';
@@ -12,6 +13,8 @@ import {
   withTiming,
 } from 'react-native-reanimated';
 
+import { type MediaType } from '@/api';
+import { getGenre } from '@/api/genre';
 import { BlurView, Image, Text, ThemedView } from '@/ui';
 
 const IMAGE_WIDTH = 128;
@@ -21,7 +24,18 @@ const SCALE_FACTOR = 2.5;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function PeekScreen() {
-  const params = useLocalSearchParams();
+  const params = useLocalSearchParams<{
+    id: string;
+    pageX: string;
+    pageY: string;
+    title: string;
+    date: string;
+    rating: string;
+    ratingCount: string;
+    uri: string;
+    mediaType: MediaType;
+    genreIds: string[];
+  }>();
   const scale = useSharedValue(1);
   const translateY = useSharedValue(0);
 
@@ -47,6 +61,8 @@ export default function PeekScreen() {
     };
   });
 
+  const genres = useQuery(getGenre(params.mediaType, params.genreIds));
+
   useEffect(() => {
     scale.value = withSpring(SCALE_FACTOR);
     translateY.value = withDelay(300, withTiming(96));
@@ -62,9 +78,10 @@ export default function PeekScreen() {
       <BlurView intensity={90} className="flex-1" entering={FadeIn}>
         <ThemedView
           className="absolute bg-transparent dark:bg-transparent"
+          entering={FadeIn.delay(400)}
           style={[
             {
-              top: IMAGE_HEIGHT * SCALE_FACTOR,
+              top: IMAGE_HEIGHT * SCALE_FACTOR - 8,
               left: interpolate(
                 Number(params.pageX),
                 [0, SCREEN_WIDTH],
@@ -79,6 +96,9 @@ export default function PeekScreen() {
           <Text className="">({params.date})</Text>
           <Text className="">
             ⭐️ {Number(params.rating).toFixed(2)} ({params.ratingCount})
+          </Text>
+          <Text className="text-sm">
+            {genres.data?.map((g) => g.name).join(', ')}
           </Text>
         </ThemedView>
 

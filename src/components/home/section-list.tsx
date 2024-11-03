@@ -1,6 +1,7 @@
 import { FlashList, type ListRenderItemInfo } from '@shopify/flash-list';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useCallback, useMemo, useRef } from 'react';
+import { Dimensions } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { runOnJS } from 'react-native-reanimated';
 
@@ -9,6 +10,8 @@ import { Env } from '@/core/env';
 import { Image, Text, View } from '@/ui';
 
 const IMAGE_WIDTH = 128;
+const ASPECT_RATIO = 2 / 3;
+const IMAGE_HEIGHT = IMAGE_WIDTH / ASPECT_RATIO;
 
 type PhotoProps = {
   item?: MovieOrTv;
@@ -26,14 +29,15 @@ function Photo({ item }: PhotoProps) {
         pathname: '/[id]/peek',
         params: {
           id: item?.id ?? '',
+          mediaType: item?.media_type,
           title: item?.media_type === 'movie' ? item.title : item?.name,
           date:
             item?.media_type === 'movie'
               ? item.release_date
               : item?.first_air_date,
-          categories: item?.genre_ids,
           rating: item?.vote_average,
           ratingCount: item?.vote_count,
+          genreIds: item?.genre_ids,
           uri,
           pageX,
           pageY,
@@ -52,17 +56,29 @@ function Photo({ item }: PhotoProps) {
 
   return (
     <GestureDetector gesture={longPress}>
-      <View
-        className="aspect-[2/3] overflow-hidden"
-        style={{ width: IMAGE_WIDTH }}
-        ref={ref}
+      <Link
+        href={{
+          pathname: '/[id]',
+          params: {
+            id: item.id,
+            mediaType: item.media_type,
+            uri,
+          },
+        }}
       >
-        <Image
-          source={{ uri }}
-          className="flex-1 rounded-lg"
-          onError={(e) => console.log(e)}
-        />
-      </View>
+        <View
+          className="overflow-hidden"
+          style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT }}
+          ref={ref}
+        >
+          <Image
+            source={{ uri }}
+            className="flex-1 rounded-lg"
+            sharedTransitionTag={`photo-${item.id}`}
+            onError={(e) => console.log(e)}
+          />
+        </View>
+      </Link>
     </GestureDetector>
   );
 }
@@ -88,7 +104,7 @@ export function SectionList({ title, data }: SectionListProps) {
   return (
     <View className="flex-1 gap-3 p-4">
       <Text className="text-xl font-semibold">{title}</Text>
-      <View className="min-h-48">
+      <View className="grow">
         <FlashList
           horizontal
           data={data ?? placeholdeData}
@@ -98,7 +114,11 @@ export function SectionList({ title, data }: SectionListProps) {
           renderItem={renderItem}
           showsHorizontalScrollIndicator={false}
           ItemSeparatorComponent={() => <View className="w-2" />}
-          estimatedItemSize={128}
+          estimatedListSize={{
+            width: Dimensions.get('window').width,
+            height: IMAGE_HEIGHT,
+          }}
+          estimatedItemSize={IMAGE_WIDTH}
         />
       </View>
     </View>
