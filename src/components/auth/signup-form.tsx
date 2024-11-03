@@ -30,6 +30,9 @@ export const SignupForm = () => {
         testID="email-input"
         control={control}
         name="email"
+        autoComplete="email"
+        keyboardType="email-address"
+        textContentType="emailAddress"
         label={translate('auth.email')}
         leadingContent={
           <MaterialCommunityIcons name="email" className="text-2xl" />
@@ -39,6 +42,8 @@ export const SignupForm = () => {
         testID="username-input"
         control={control}
         name="username"
+        autoComplete="username"
+        textContentType="username"
         label={translate('auth.username')}
         leadingContent={<FontAwesome5 name="user-alt" size={24} />}
       />

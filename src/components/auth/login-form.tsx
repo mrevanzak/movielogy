@@ -29,6 +29,9 @@ export const LoginForm = () => {
         testID="email-input"
         control={control}
         name="email"
+        autoComplete="email"
+        keyboardType="email-address"
+        textContentType="emailAddress"
         label={translate('auth.email')}
         leadingContent={
           <MaterialCommunityIcons name="email" className="text-2xl" />
