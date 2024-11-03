@@ -43,7 +43,7 @@ function Photo({
   });
 
   return (
-    <View className="h-[60vh] w-screen overflow-hidden">
+    <View className="h-[60vh] overflow-hidden" style={{ width: IMAGE_WIDTH }}>
       <Image
         source={{ uri: Env.IMAGE_URL + '/w500' + item?.poster_path }}
         className="flex-1"

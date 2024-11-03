@@ -12,7 +12,7 @@ import { AppState, Platform } from 'react-native';
 
 import { errorHandling } from '@/core/utils';
 
-export const queryClient = new QueryClient({
+const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error) => errorHandling(error),
   }),

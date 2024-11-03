@@ -1,7 +1,7 @@
 import React from 'react';
 import type { TextProps, TextStyle } from 'react-native';
 import { I18nManager, StyleSheet } from 'react-native';
-import Animated, { type AnimatedProps, FadeIn } from 'react-native-reanimated';
+import Animated, { type AnimatedProps } from 'react-native-reanimated';
 import { twMerge } from 'tailwind-merge';
 
 import type { TxKeyPath } from '@/core/i18n';
@@ -17,7 +17,6 @@ export const Text = ({
   style,
   tx,
   children,
-  entering = FadeIn.duration(1000),
   ...props
 }: Props) => {
   const textStyle = React.useMemo(
@@ -40,12 +39,7 @@ export const Text = ({
     [style],
   );
   return (
-    <Animated.Text
-      entering={entering}
-      className={textStyle}
-      style={nStyle}
-      {...props}
-    >
+    <Animated.Text className={textStyle} style={nStyle} {...props}>
       {tx ? translate(tx) : children}
     </Animated.Text>
   );

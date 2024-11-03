@@ -3,8 +3,7 @@ import { Link } from 'expo-router';
 import React from 'react';
 
 import { translate } from '@/core/i18n';
-import { Button, View } from '@/ui';
-import { ThemedView } from '@/ui/themed-view';
+import { Button, ThemedView, View } from '@/ui';
 
 export default function Auth() {
   return (

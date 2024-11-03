@@ -3,8 +3,7 @@ import React from 'react';
 
 import { LoginForm } from '@/components/auth/login-form';
 import { translate } from '@/core/i18n';
-import { Text } from '@/ui';
-import { ThemedView } from '@/ui/themed-view';
+import { Text, ThemedView } from '@/ui';
 
 export default function Login() {
   return (

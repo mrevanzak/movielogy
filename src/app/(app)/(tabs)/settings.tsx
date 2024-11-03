@@ -30,7 +30,7 @@ export default function Settings() {
           <Text className="text-sm">{user?.email}</Text>
         </View>
       </View>
-      <View className="flex-1 px-4">
+      <View className="px-4">
         <ItemsContainer title="settings.generale">
           <LanguageItem />
           <ThemeItem />

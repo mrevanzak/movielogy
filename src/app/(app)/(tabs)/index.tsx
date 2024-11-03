@@ -1,7 +1,7 @@
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 
 import { type MovieOrTv } from '@/api';
 import { getNowPlaying } from '@/api/now-playing';
@@ -12,6 +12,8 @@ import { HeroImages } from '@/components/home/hero-images';
 import { SectionList } from '@/components/home/section-list';
 
 export default function Home() {
+  const queryClient = useQueryClient();
+
   const popularQuery = useQueries({
     queries: [getPopular('movie'), getPopular('tv')],
     combine: (results) => {
@@ -36,7 +38,17 @@ export default function Home() {
   });
 
   return (
-    <ScrollView className="flex-1 gap-5">
+    <ScrollView
+      className="flex-1 gap-5"
+      refreshControl={
+        <RefreshControl
+          refreshing={upcomingQuery.isFetching}
+          onRefresh={() => {
+            queryClient.refetchQueries();
+          }}
+        />
+      }
+    >
       <StatusBar style="light" animated />
 
       <HeroImages />

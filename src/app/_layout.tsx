@@ -30,8 +30,17 @@ export default function RootLayout() {
   return (
     <Providers>
       <FocusAwareStatusBar />
-      <Stack initialRouteName="(app)" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack
+        initialRouteName="(app)"
+        screenOptions={{ headerShown: false, animation: 'slide_from_right' }}
+      >
+        <Stack.Screen
+          name="(app)/[id]/peek"
+          options={{
+            presentation: 'containedTransparentModal',
+            animation: 'fade',
+          }}
+        />
       </Stack>
     </Providers>
   );

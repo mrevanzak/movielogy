@@ -14,6 +14,9 @@ export default function NotFoundScreen() {
         <Link href="/" className="mt-4">
           <Text className="text-blue-500 underline">Go to home screen!</Text>
         </Link>
+        <Link href="/_sitemap" className="mt-4">
+          <Text className="text-blue-500 underline">Go to sitemap!</Text>
+        </Link>
       </View>
     </>
   );
