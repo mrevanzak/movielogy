@@ -17,5 +17,4 @@ export const getTrending = queryOptions({
         ),
       );
   },
-  staleTime: Infinity,
 });

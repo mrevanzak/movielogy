@@ -13,6 +13,11 @@ import { AppState, Platform } from 'react-native';
 import { errorHandling } from '@/core/utils';
 
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 60, // 1 hour
+    },
+  },
   queryCache: new QueryCache({
     onError: (error) => errorHandling(error),
   }),
