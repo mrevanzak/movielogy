@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'expo-router';
 import { Skeleton } from 'moti/skeleton';
 import React, { useCallback, useMemo } from 'react';
 import { Dimensions, type ListRenderItemInfo, View } from 'react-native';
@@ -28,6 +29,8 @@ function Photo({
   index: number;
   scrollX: SharedValue<number>;
 }) {
+  const uri = Env.IMAGE_URL + '/w500' + item?.poster_path;
+
   const rStyles = useAnimatedStyle(() => {
     return {
       transform: [
@@ -43,23 +46,35 @@ function Photo({
   });
 
   return (
-    <View className="h-[60vh] overflow-hidden" style={{ width: IMAGE_WIDTH }}>
-      <Image
-        source={{ uri: Env.IMAGE_URL + '/w500' + item?.poster_path }}
-        className="flex-1"
-        style={rStyles}
-        onError={(e) => console.log(e)}
-      />
-      <Gradient />
+    <Link
+      href={{
+        pathname: '/[id]',
+        params: {
+          id: String(item?.id) ?? '',
+          mediaType: item?.media_type,
+          uri,
+        },
+      }}
+    >
+      <View className="h-[60vh] overflow-hidden" style={{ width: IMAGE_WIDTH }}>
+        <Image
+          source={{ uri }}
+          className="flex-1"
+          style={rStyles}
+          sharedTransitionTag={`photo-${item?.id}`}
+          onError={(e) => console.log(e)}
+        />
+        <Gradient />
 
-      <Skeleton>
-        {item && (
-          <Text className="absolute inset-x-0 bottom-0 p-4 text-xl font-semibold">
-            {item.media_type === 'movie' ? item.title : item.name}
-          </Text>
-        )}
-      </Skeleton>
-    </View>
+        <Skeleton>
+          {item && (
+            <Text className="absolute inset-x-0 bottom-0 p-4 text-xl font-semibold">
+              {item.media_type === 'movie' ? item.title : item.name}
+            </Text>
+          )}
+        </Skeleton>
+      </View>
+    </Link>
   );
 }
 

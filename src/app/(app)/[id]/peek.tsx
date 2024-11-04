@@ -93,7 +93,7 @@ export default function PeekScreen() {
           ]}
         >
           <Text className="text-xl font-semibold">{params.title}</Text>
-          <Text className="">({params.date})</Text>
+          <Text className="">{params.date}</Text>
           <Text className="">
             ⭐️ {Number(params.rating).toFixed(2)} ({params.ratingCount})
           </Text>

@@ -43,3 +43,12 @@ export const genreSchema = z.object({
   name: z.string(),
 });
 export type Genre = z.infer<typeof genreSchema>;
+
+export function createPaginatedSchema<T extends z.ZodTypeAny>(schema: T) {
+  return z.object({
+    page: z.number(),
+    results: z.array(schema),
+    total_pages: z.number(),
+    total_results: z.number(),
+  });
+}
