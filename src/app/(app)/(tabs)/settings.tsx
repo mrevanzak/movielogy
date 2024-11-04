@@ -24,6 +24,7 @@ export default function Settings() {
         <Image
           source="https://api.dicebear.com/9.x/lorelei/svg"
           className="my-8 size-32"
+          withSkeleton
         />
         <View className="justify-center">
           <Text className="text-lg font-semibold">{user?.username}</Text>

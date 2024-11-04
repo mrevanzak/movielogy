@@ -25,6 +25,7 @@ export default function SearchScreen() {
         <Image
           source={{ uri: Env.IMAGE_URL + '/w92' + item.poster_path }}
           className="aspect-[2/3] w-24 rounded-lg"
+          withSkeleton
         />
 
         <View className="flex-1">
