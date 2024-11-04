@@ -15,6 +15,7 @@ import {
 
 import { type MediaType } from '@/api';
 import { getGenre } from '@/api/genre';
+import { Env } from '@/core/env';
 import { BlurView, Image, Text, ThemedView } from '@/ui';
 
 const IMAGE_WIDTH = 128;
@@ -32,7 +33,7 @@ export default function PeekScreen() {
     date?: string;
     rating: string;
     ratingCount: string;
-    uri: string;
+    posterPath: string;
     mediaType: MediaType;
     genreIds: string[];
   }>();
@@ -62,6 +63,7 @@ export default function PeekScreen() {
   });
 
   const genres = useQuery(getGenre(params.mediaType, params.genreIds));
+  const uri = Env.IMAGE_URL + '/w500' + params.posterPath;
 
   useEffect(() => {
     scale.value = withSpring(SCALE_FACTOR);
@@ -116,7 +118,7 @@ export default function PeekScreen() {
           ]}
         >
           <Image
-            source={{ uri: params.uri.toString() }}
+            source={{ uri }}
             className="flex-1"
             entering={undefined}
             onError={(e) => console.log(e)}

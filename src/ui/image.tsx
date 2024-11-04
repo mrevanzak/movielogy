@@ -3,7 +3,7 @@ import { Image as NImage } from 'expo-image';
 import { Skeleton } from 'moti/skeleton';
 import { cssInterop, useColorScheme } from 'nativewind';
 import * as React from 'react';
-import Animated, { type AnimatedProps, FadeIn } from 'react-native-reanimated';
+import Animated, { type AnimatedProps } from 'react-native-reanimated';
 
 const AnimatedImage = Animated.createAnimatedComponent(NImage);
 cssInterop(NImage, { className: 'style' });
@@ -23,16 +23,15 @@ export const Image = ({
   const [loaded, setLoaded] = React.useState(false);
 
   return withSkeleton ? (
-    <Skeleton show={!loaded} colorMode={isDark ? 'dark' : 'light'}>
-      <AnimatedImage
-        entering={FadeIn.duration(1000)}
-        onLoadEnd={() => setLoaded(true)}
-        {...props}
-      />
+    <Skeleton
+      show={!loaded}
+      colorMode={isDark ? 'dark' : 'light'}
+      radius="square"
+    >
+      <AnimatedImage onLoadEnd={() => setLoaded(true)} {...props} />
     </Skeleton>
   ) : (
     <AnimatedImage
-      entering={FadeIn.duration(1000)}
       placeholder={placeholder}
       onLoadEnd={() => setLoaded(true)}
       {...props}
