@@ -16,7 +16,7 @@ const baseSchema = z.object({
 export const tvSchema = baseSchema.extend({
   name: z.string(),
   original_name: z.string(),
-  first_air_date: z.string().date(),
+  first_air_date: z.string().date().or(z.string().optional()),
   media_type: z.enum(['tv']),
 });
 export type Tv = z.infer<typeof tvSchema>;
@@ -24,7 +24,7 @@ export type Tv = z.infer<typeof tvSchema>;
 export const movieSchema = baseSchema.extend({
   title: z.string(),
   original_title: z.string(),
-  release_date: z.string().date(),
+  release_date: z.string().date().or(z.string().optional()),
   media_type: z.enum(['movie']),
 });
 export type Movie = z.infer<typeof movieSchema>;

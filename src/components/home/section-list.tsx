@@ -32,11 +32,10 @@ function Photo({ item, type }: PhotoProps) {
           id: item?.id ?? '',
           mediaType: item?.media_type,
           title: item?.media_type === 'movie' ? item.title : item?.name,
-          date: new Date(
+          date:
             item?.media_type === 'movie'
               ? item.release_date
-              : item!.first_air_date,
-          ).getFullYear(),
+              : item?.first_air_date,
           rating: item?.vote_average,
           ratingCount: item?.vote_count,
           genreIds: item?.genre_ids,

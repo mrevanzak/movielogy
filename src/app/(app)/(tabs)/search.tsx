@@ -1,9 +1,11 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { FlashList } from '@shopify/flash-list';
+import { FlashList, type ListRenderItemInfo } from '@shopify/flash-list';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useCallback } from 'react';
 import { ActivityIndicator, TextInput, View } from 'react-native';
 import { useDebounceValue } from 'usehooks-ts';
 
+import { type MovieOrTv } from '@/api';
 import { getSearch } from '@/api/search';
 import { Env } from '@/core/env';
 import { colors, Image, Text } from '@/ui';
@@ -13,6 +15,34 @@ export default function SearchScreen() {
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery(
     getSearch(query),
   );
+
+  const renderItem = useCallback(({ item }: ListRenderItemInfo<MovieOrTv>) => {
+    const date =
+      item.media_type === 'movie' ? item.release_date : item.first_air_date;
+
+    return (
+      <View className="mx-4 flex-row gap-4">
+        <Image
+          source={{ uri: Env.IMAGE_URL + '/w92' + item.poster_path }}
+          className="aspect-[2/3] w-24 rounded-lg"
+        />
+
+        <View className="flex-1">
+          <Text className="text-lg font-semibold">
+            {item.media_type === 'movie' ? item.title : item.name}
+          </Text>
+          {date && (
+            <Text className="text-sm opacity-60">
+              {new Date(date).getFullYear()}
+            </Text>
+          )}
+          <Text className="">
+            ⭐️ {Number(item.vote_average).toFixed(1)} ({item.vote_count})
+          </Text>
+        </View>
+      </View>
+    );
+  }, []);
 
   return (
     <View className="flex-1">
@@ -27,30 +57,7 @@ export default function SearchScreen() {
       </View>
       <FlashList
         data={data?.pages?.flatMap((page) => page?.results)}
-        renderItem={({ item }) => (
-          <View className="mx-4 flex-row gap-4">
-            <Image
-              source={{ uri: Env.IMAGE_URL + '/w92' + item.poster_path }}
-              className="aspect-[2/3] w-24 rounded-lg"
-            />
-
-            <View className="flex-1">
-              <Text className="text-lg font-semibold">
-                {item.media_type === 'movie' ? item.title : item.name}
-              </Text>
-              <Text className="text-sm opacity-60">
-                {new Date(
-                  item.media_type === 'movie'
-                    ? item.release_date
-                    : item.first_air_date,
-                ).getFullYear()}
-              </Text>
-              <Text className="">
-                ⭐️ {Number(item.vote_average).toFixed(1)} ({item.vote_count})
-              </Text>
-            </View>
-          </View>
-        )}
+        renderItem={renderItem}
         keyboardDismissMode="on-drag"
         estimatedItemSize={160}
         keyExtractor={(item) => String(item.id)}

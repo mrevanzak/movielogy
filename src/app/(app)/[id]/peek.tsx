@@ -29,7 +29,7 @@ export default function PeekScreen() {
     pageX: string;
     pageY: string;
     title: string;
-    date: string;
+    date?: string;
     rating: string;
     ratingCount: string;
     uri: string;
@@ -93,7 +93,9 @@ export default function PeekScreen() {
           ]}
         >
           <Text className="text-xl font-semibold">{params.title}</Text>
-          <Text className="">{params.date}</Text>
+          {params.date && (
+            <Text className="">{new Date(params.date).getFullYear()}</Text>
+          )}
           <Text className="">
             ⭐️ {Number(params.rating).toFixed(2)} ({params.ratingCount})
           </Text>
