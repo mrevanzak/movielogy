@@ -9,6 +9,7 @@ import { type MovieOrTv } from '@/api';
 import { getSearch } from '@/api/search';
 import { Peekable } from '@/components/peekable';
 import { Env } from '@/core/env';
+import { translate } from '@/core/i18n';
 import { colors, Image, Text } from '@/ui';
 
 export default function SearchScreen() {
@@ -54,7 +55,7 @@ export default function SearchScreen() {
       <View className="m-4 flex-row items-center justify-between rounded-full pr-4 dark:bg-neutral-800">
         <TextInput
           onChangeText={setQuery}
-          placeholder="Search for a title..."
+          placeholder={translate('search.placeholder')}
           placeholderTextColor={colors.primary}
           className="flex-1 p-4 text-primary"
         />

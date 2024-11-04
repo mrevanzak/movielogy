@@ -9,6 +9,15 @@
     "signup": "Daftar",
     "username": "Username"
   },
+  "home": {
+    "now_playing": "Sedang diputar",
+    "popular": "Populer",
+    "top_rated": "Terbaik",
+    "upcoming": "Akan datang"
+  },
+  "search": {
+    "placeholder": "Cari berdasarkan judul..."
+  },
   "settings": {
     "about": "Tentang",
     "app_name": "Nama Aplikasi",
@@ -35,5 +44,11 @@
     "title": "Pengaturan",
     "version": "Versi",
     "website": "Website"
+  },
+  "tabs": {
+    "favorites": "Favorit",
+    "home": "Beranda",
+    "search": "Cari",
+    "settings": "Pengaturan"
   }
 }

@@ -10,6 +10,7 @@ import { getTopRated } from '@/api/top-rated';
 import { getUpcoming } from '@/api/upcoming';
 import { HeroImages } from '@/components/home/hero-images';
 import { SectionList } from '@/components/home/section-list';
+import { translate } from '@/core/i18n';
 
 export default function Home() {
   const popularQuery = useQueries({
@@ -40,10 +41,16 @@ export default function Home() {
       <StatusBar style="light" animated />
 
       <HeroImages />
-      <SectionList title="Popular" data={popularQuery} />
-      <SectionList title="Now Playing" data={nowPlayingQuery} />
-      <SectionList title="Upcoming" data={upcomingQuery.data} />
-      <SectionList title="Top Rated" data={topRatedQuery} />
+      <SectionList title={translate('home.popular')} data={popularQuery} />
+      <SectionList
+        title={translate('home.now_playing')}
+        data={nowPlayingQuery}
+      />
+      <SectionList
+        title={translate('home.upcoming')}
+        data={upcomingQuery.data}
+      />
+      <SectionList title={translate('home.top_rated')} data={topRatedQuery} />
     </ScrollView>
   );
 }

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useColorScheme } from 'nativewind';
+import React from 'react';
 import { match } from 'ts-pattern';
 
 import { type MediaType } from '@/api';

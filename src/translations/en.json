@@ -9,6 +9,15 @@
     "signup": "Sign Up",
     "username": "Username"
   },
+  "home": {
+    "now_playing": "Now Playing",
+    "popular": "Popular",
+    "top_rated": "Top Rated",
+    "upcoming": "Upcoming"
+  },
+  "search": {
+    "placeholder": "Search for a title..."
+  },
   "settings": {
     "about": "About",
     "app_name": "App Name",
@@ -35,5 +44,11 @@
     "title": "Settings",
     "version": "Version",
     "website": "Website"
+  },
+  "tabs": {
+    "favorites": "Favorites",
+    "home": "Home",
+    "search": "Search",
+    "settings": "Settings"
   }
 }
