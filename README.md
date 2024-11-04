@@ -18,23 +18,23 @@ Mobile App </h1>
 Clone the repo to your machine and install deps :
 
 ```sh
-git clone https://github.com/user/repo-name
+git clone https://github.com/mrevanza/movielogy
 
-cd ./repo-name
+cd ./movielogy
 
-pnpm install
+bun install
 ```
 
 To run the app on ios
 
 ```sh
-pnpm ios
+bun ios
 ```
 
 To run the app on Android
 
 ```sh
-pnpm android
+bun android
 ```
 
 ## ✍️ Documentation
