@@ -12,8 +12,8 @@ export const getTrending = queryOptions({
       .array()
       .parse(
         response.data.results.filter(
-          (item: { media_type: 'tv' | 'movie' | 'people' }) =>
-            item.media_type !== 'people',
+          (item: { media_type: 'tv' | 'movie' | 'person' }) =>
+            item.media_type !== 'person',
         ),
       );
   },
