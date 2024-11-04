@@ -2,6 +2,7 @@ import { useQueries, useQuery, useQueryClient } from '@tanstack/react-query';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type MovieOrTv } from '@/api';
 import { getNowPlaying } from '@/api/now-playing';
@@ -13,6 +14,7 @@ import { SectionList } from '@/components/home/section-list';
 
 export default function Home() {
   const queryClient = useQueryClient();
+  const safeAreaInsets = useSafeAreaInsets();
 
   const popularQuery = useQueries({
     queries: [getPopular('movie'), getPopular('tv')],
@@ -42,7 +44,8 @@ export default function Home() {
       className="flex-1 gap-5"
       refreshControl={
         <RefreshControl
-          refreshing={upcomingQuery.isFetching}
+          progressViewOffset={safeAreaInsets.top}
+          refreshing={queryClient.isFetching() > 0}
           onRefresh={() => {
             queryClient.refetchQueries();
           }}

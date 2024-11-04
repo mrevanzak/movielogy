@@ -23,7 +23,8 @@ export default function TabLayout() {
   }, [hideSplash, status]);
 
   if (status !== 'signIn') {
-    return <Redirect href="/auth" />;
+    console.log('Redirecting to auth');
+    return <Redirect href="/(auth)/auth" />;
   }
 
   return (

@@ -34,6 +34,7 @@ export default function RootLayout() {
         initialRouteName="(app)"
         screenOptions={{ headerShown: false, animation: 'slide_from_right' }}
       >
+        <Stack.Screen name="(auth)" options={{ animation: 'fade' }} />
         <Stack.Screen
           name="(app)/[id]/peek"
           options={{
