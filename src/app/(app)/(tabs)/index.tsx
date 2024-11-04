@@ -44,7 +44,7 @@ export default function Home() {
       className="flex-1 gap-5"
       refreshControl={
         <RefreshControl
-          progressViewOffset={safeAreaInsets.top}
+          style={{ marginTop: -safeAreaInsets.top / 2 }}
           refreshing={queryClient.isFetching() > 0}
           onRefresh={() => {
             queryClient.refetchQueries();
