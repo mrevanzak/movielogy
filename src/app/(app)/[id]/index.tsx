@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { Stack, useLocalSearchParams } from 'expo-router';
+import { useColorScheme } from 'nativewind';
 import { match } from 'ts-pattern';
 
 import { type MediaType } from '@/api';
 import { getDetails } from '@/api/details';
 import { Env } from '@/core/env';
-import { Image, ParallaxScrollView, Text, View } from '@/ui';
+import { colors, Image, ParallaxScrollView, Text, View } from '@/ui';
 
 export default function Details() {
+  const { colorScheme } = useColorScheme();
   const params = useLocalSearchParams<{
     id: string;
     uri: string;
@@ -33,6 +35,11 @@ export default function Details() {
           title: params.title,
           headerShown: true,
           headerBackTitleVisible: false,
+          headerTintColor: colors.primary,
+          headerStyle: {
+            backgroundColor:
+              colorScheme === 'dark' ? colors.black : colors.white,
+          },
         }}
       />
 
