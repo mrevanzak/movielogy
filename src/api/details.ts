@@ -1,8 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
-import { z } from 'zod';
 
 import { client } from './common';
-import { genreSchema, type MediaType, movieSchema, tvSchema } from './schema';
+import { type MediaType, movieDetailsSchema, tvDetailsSchema } from './schema';
 
 export const getDetails = (type: MediaType, id: string) =>
   queryOptions({
@@ -11,21 +10,12 @@ export const getDetails = (type: MediaType, id: string) =>
       const response = await client.get(`${type}/${id}`);
 
       if (type === 'movie') {
-        return movieSchema
-          .omit({ genre_ids: true })
-          .extend({
-            genres: genreSchema.array(),
-            runtime: z.number(),
-          })
-          .parse({ ...response.data, media_type: 'movie' });
+        return movieDetailsSchema.parse({
+          ...response.data,
+          media_type: 'movie',
+        });
       }
 
-      return tvSchema
-        .omit({ genre_ids: true })
-        .extend({
-          genres: genreSchema.array(),
-          number_of_seasons: z.number(),
-        })
-        .parse({ ...response.data, media_type: 'tv' });
+      return tvDetailsSchema.parse({ ...response.data, media_type: 'tv' });
     },
   });

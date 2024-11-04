@@ -9,6 +9,11 @@
     "signup": "Daftar",
     "username": "Username"
   },
+  "favorites": {
+    "add": "Tambahkan ke Favorit",
+    "empty": "Anda belum memiliki favorit.",
+    "remove": "Hapus dari Favorit"
+  },
   "home": {
     "now_playing": "Sedang diputar",
     "popular": "Populer",

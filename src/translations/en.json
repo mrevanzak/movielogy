@@ -9,6 +9,11 @@
     "signup": "Sign Up",
     "username": "Username"
   },
+  "favorites": {
+    "add": "Add to Favorites",
+    "empty": "You don't have any favorites yet.",
+    "remove": "Remove from Favorites"
+  },
   "home": {
     "now_playing": "Now Playing",
     "popular": "Popular",

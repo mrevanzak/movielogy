@@ -7,7 +7,9 @@ import { match } from 'ts-pattern';
 import { type MediaType } from '@/api';
 import { getDetails } from '@/api/details';
 import { Env } from '@/core/env';
-import { colors, Image, ParallaxScrollView, Text, View } from '@/ui';
+import { translate } from '@/core/i18n';
+import { useFavorites } from '@/core/stores/favorites';
+import { Button, colors, Image, ParallaxScrollView, Text, View } from '@/ui';
 
 export default function Details() {
   const { colorScheme } = useColorScheme();
@@ -17,6 +19,10 @@ export default function Details() {
     title: string;
     type: MediaType;
   }>();
+  const toggleFavorite = useFavorites((state) => state.toggleFavorite);
+  const isFavorite = useFavorites((state) =>
+    state.isFavorite(Number(params.id)),
+  );
 
   const { data } = useQuery(getDetails(params.type, params.id));
 
@@ -78,6 +84,22 @@ export default function Details() {
       </View>
 
       <Text className="">{data?.overview}</Text>
+
+      <Button
+        label={
+          isFavorite
+            ? translate('favorites.remove')
+            : translate('favorites.add')
+        }
+        variant={isFavorite ? 'destructive' : 'default'}
+        onPress={() =>
+          data &&
+          toggleFavorite({
+            ...data,
+            genre_ids: data.genres.map((genre) => genre.id),
+          })
+        }
+      />
     </ParallaxScrollView>
   );
 }
