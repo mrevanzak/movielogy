@@ -33,8 +33,8 @@ require('dotenv').config()
 const BUNDLE_ID = 'com.mrevanzak.movielogy'; // ios bundle id
 const PACKAGE = 'com.mrevanzak.movielogy'; // android package name
 const NAME = 'movielogy'; // app name
-const EXPO_ACCOUNT_OWNER = 'expo-owner'; // expo account owner
-const EAS_PROJECT_ID = 'c3e1075b-6fe7-4686-aa49-35b46a229044'; // eas project id
+const EXPO_ACCOUNT_OWNER = 'mrevanzak'; // expo account owner
+const EAS_PROJECT_ID = '54b0dced-388c-4722-bf76-896fef4b1fd5'; // eas project id
 const SCHEME = 'movielogy'; // app scheme
 
 /**
