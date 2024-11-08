@@ -16,12 +16,10 @@ export default function TabLayout() {
     await SplashScreen.hideAsync();
   }, []);
   useEffect(() => {
-    if (status !== 'idle') {
-      setTimeout(() => {
-        hideSplash();
-      }, 1000);
-    }
-  }, [hideSplash, status]);
+    setTimeout(() => {
+      hideSplash();
+    }, 1000);
+  }, [hideSplash]);
 
   if (status !== 'signIn') {
     console.log('Redirecting to auth');
