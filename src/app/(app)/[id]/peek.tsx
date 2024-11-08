@@ -77,7 +77,12 @@ export default function PeekScreen() {
 
   return (
     <Pressable onPress={() => router.back()} className="flex-1">
-      <BlurView intensity={90} className="flex-1" entering={FadeIn}>
+      <BlurView
+        intensity={90}
+        className="flex-1"
+        entering={FadeIn}
+        experimentalBlurMethod="dimezisBlurView"
+      >
         <ThemedView
           className="absolute bg-transparent dark:bg-transparent"
           entering={FadeIn.delay(400)}

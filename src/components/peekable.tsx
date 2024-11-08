@@ -60,7 +60,7 @@ export function Peekable({ item, children, ...rest }: PeekableProps) {
         asChild
       >
         <TouchableOpacity>
-          <View ref={ref} {...rest}>
+          <View collapsable={false} ref={ref} {...rest}>
             {children}
           </View>
         </TouchableOpacity>
