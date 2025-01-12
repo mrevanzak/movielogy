@@ -5,9 +5,10 @@ import { useCallback } from 'react';
 import { ActivityIndicator, TextInput, View } from 'react-native';
 import { useDebounceValue } from 'usehooks-ts';
 
-import { type MovieOrTv } from '@/api';
+import type { MovieOrTv } from '@/api';
 import { getSearch } from '@/api/search';
 import { Card } from '@/components/card';
+import { SearchHistory } from '@/components/search/search-history';
 import { translate } from '@/core/i18n';
 import { colors } from '@/ui';
 
@@ -23,9 +24,10 @@ export default function SearchScreen() {
   );
 
   return (
-    <View className="flex-1">
-      <View className="m-4 flex-row items-center justify-between rounded-full pr-4 dark:bg-neutral-800">
+    <View className="flex-1 gap-4">
+      <View className="mx-4 flex-row items-center justify-between rounded-full pr-4 dark:bg-neutral-800">
         <TextInput
+          defaultValue={query}
           onChangeText={setQuery}
           placeholder={translate('search.placeholder')}
           placeholderTextColor={colors.primary}
@@ -33,6 +35,7 @@ export default function SearchScreen() {
         />
         <MaterialIcons name="search" size={24} color={colors.primary} />
       </View>
+      <SearchHistory query={query} setQuery={setQuery} />
       <FlashList
         data={data?.pages?.flatMap((page) => page?.results)}
         renderItem={renderItem}
